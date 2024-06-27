@@ -83,33 +83,32 @@ Some setup is required for the Terraform plan/apply pipelines to work in your ow
     * **NEW_RELIC_ACCOUNT_ID** (New Relic account ID)
 
 ########################################################################
-Notes from Zahiruddin Khan about the SRE-Challenge:
-
+**Notes from Zahiruddin Khan about the SRE-Challenge:**
 I utilized the online documentation of Terraform with New Relic to fulfill the requirements:
-
 https://registry.terraform.io/providers/newrelic/newrelic/latest/docs/guides/getting_started
+
 As mentioned during the technical interview, I have limited experience with New Relic. To bridge this gap, I created a few sections manually to better understand the working conditions. After gaining this understanding, I applied the Terraform configuration using a local setup to grasp the New Relic configuration values better.
 
 The entire setup was created using Terraform in New Relic, and I have updated the sre-challenge repository accordingly. You will notice two sets of each section in New Relic. I did not delete the previous ones as I wanted to verify the resources.
 
-Limitations:
+**Limitations**
 - Synthetics Monitors Frequency: The synthetics monitors are running every 6 hours due to New Relic account limitations, which allow only 500 monitors per month. I divided the number across three monitors to manage the quota.
 - STEP Monitor Creation: I was unable to create a synthetic monitor for the STEP Monitor using Terraform because I am not yet familiar with the argument structure used for New Relic. This monitor was created manually. With continued use, I believe I will be able to handle this as well.
 
 ########################################################################
-List of Synthetic Monitors Created
+**List of Synthetic Monitors Created**
 - Website Ping Test
 - Submit Form Test: Tests the "Contact Us" section using a New Relic Step Monitor
 - Monitor SSL Certificate
 
-Dashboard Created
+**Dashboard Created**
 - Dashboard Name: React App Synthetics
 
-Widgets Included:
+Widgets Included
 - Request and Response Time
 - Error Response Codes
 
-Alerting Configuration
+**Alerting Configuration**
 I created three sections in Terraform for alerting:
 
 - Notification_Destination: Named "alert-email"
