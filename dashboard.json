@@ -1,0 +1,140 @@
+{
+  "name": "React App Synthetics",
+  "description": null,
+  "permissions": "PUBLIC_READ_WRITE",
+  "pages": [
+    {
+      "name": "React App Synthetics",
+      "description": null,
+      "widgets": [
+        {
+          "title": "PingTest - Request & response time",
+          "layout": {
+            "column": 1,
+            "row": 1,
+            "width": 4,
+            "height": 3
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.line"
+          },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountId": 4493573,
+                "query": "SELECT average(durationSend) AS 'Send', average(durationWait) AS 'Wait', average(durationReceive) AS 'Receive' FROM SyntheticRequest WHERE monitorId = '4c78b67d-0b8a-4642-bf2f-1c62cadd778f'  TIMESERIES auto SINCE 30 MINUTES AGO"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Submitform-Request & response time",
+          "layout": {
+            "column": 5,
+            "row": 1,
+            "width": 4,
+            "height": 3
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.line"
+          },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountId": 4493573,
+                "query": "SELECT average(durationSend) AS 'Send', average(durationWait) AS 'Wait', average(durationReceive) AS 'Receive' FROM SyntheticRequest WHERE monitorId = 'a5edffc0-b017-4d7d-bf77-aa70081f74fb'  TIMESERIES auto SINCE 30 MINUTES AGO"
+              }
+            ]
+          }
+        },
+        {
+          "title": "CertCheck-Request & response time",
+          "layout": {
+            "column": 9,
+            "row": 1,
+            "width": 4,
+            "height": 3
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.line"
+          },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountId": 4493573,
+                "query": "SELECT average(durationSend) AS 'Send', average(durationWait) AS 'Wait', average(durationReceive) AS 'Receive' FROM SyntheticRequest WHERE monitorId = 'f0a395d2-8628-418f-a12b-a3c5cd80f4d4'  TIMESERIES auto SINCE 30 MINUTES AGO"
+              }
+            ]
+          }
+        },
+        {
+          "title": "PingTest-Error response codes",
+          "layout": {
+            "column": 1,
+            "row": 4,
+            "width": 4,
+            "height": 3
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.line"
+          },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountId": 4493573,
+                "query": "SELECT count(*) AS 'Error response codes' FROM SyntheticRequest WHERE monitorId = '4c78b67d-0b8a-4642-bf2f-1c62cadd778f' AND responseCode > 399  FACET responseCode TIMESERIES auto SINCE 30 MINUTES AGO"
+              }
+            ]
+          }
+        },
+        {
+          "title": "SubmitForm-Error response codes",
+          "layout": {
+            "column": 5,
+            "row": 4,
+            "width": 4,
+            "height": 3
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.line"
+          },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountId": 4493573,
+                "query": "SELECT count(*) AS 'Error response codes' FROM SyntheticRequest WHERE monitorId = 'a5edffc0-b017-4d7d-bf77-aa70081f74fb' AND responseCode > 399  FACET responseCode TIMESERIES auto SINCE 30 MINUTES AGO"
+              }
+            ]
+          }
+        },
+        {
+          "title": "CertCheck-Error response codes",
+          "layout": {
+            "column": 9,
+            "row": 4,
+            "width": 4,
+            "height": 3
+          },
+          "linkedEntityGuids": null,
+          "visualization": {
+            "id": "viz.line"
+          },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountId": 4493573,
+                "query": "SELECT count(*) AS 'Error response codes' FROM SyntheticRequest WHERE monitorId = 'f0a395d2-8628-418f-a12b-a3c5cd80f4d4' AND responseCode > 399  FACET responseCode TIMESERIES auto SINCE 30 MINUTES AGO"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "variables": []
+}
