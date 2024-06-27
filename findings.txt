@@ -1,0 +1,2 @@
+Due to limitations of how many times the Synthetic monitor can run, I don't have enough data points in dashboards to provide any valuable input.
+However, the few tests which occur provides as estimate of the loading time of the website and populating the Contact Us form.
