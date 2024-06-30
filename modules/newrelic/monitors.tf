@@ -35,7 +35,7 @@ resource "newrelic_synthetics_script_monitor" "form_submission_monitor" {
   status               = "ENABLED"
   name                 = "Form Submission Monitor"
   type                 = "SCRIPT_BROWSER"
-  period               = "EVERY_DAY"
+  period               = "EVERY_6_HOURS"
   locations_public     = var.newrelic_synthetic_region
   runtime_type         = "CHROME_BROWSER"
   runtime_type_version = "100"
@@ -55,7 +55,7 @@ resource "newrelic_synthetics_script_monitor" "ssl_certificate_monitor" {
   status               = "ENABLED"
   name                 = "SSL Certificate Monitor"
   type                 = "SCRIPT_API"
-  period               = "EVERY_DAY"
+  period               = "EVERY_6_HOURS"
   locations_public     = var.newrelic_synthetic_region
   runtime_type         = "NODE_API"
   runtime_type_version = "16.10"
