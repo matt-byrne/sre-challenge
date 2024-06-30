@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  plan:
+  apply:
     name: Terraform Apply
     runs-on: ubuntu-20.04
     defaults:
@@ -18,15 +18,20 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
+      - name: Format Terraform
+        run: terraform fmt -recursive -check
+
       - name: Initialise Terraform
-        run: |
-          terraform init -input=false \
-            -backend-config="container_name=${{ secrets.AZURE_STORAGE_BACKEND_CONTAINER_NAME }}"
+        run: terraform init -input=false
         env:
-          ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_SAS_TOKEN: ${{ secrets.ARM_SAS_TOKEN }}
-          NEW_RELIC_ACCOUNT_ID: ${{ vars.NEW_RELIC_ACCOUNT_ID }}
-          NEW_RELIC_API_KEY: ${{ secrets.NEW_RELIC_API_KEY }}
+          AZURE_STORAGE_BACKEND_CONTAINER_NAME: ${{ secrets.AZURE_STORAGE_BACKEND_CONTAINER_NAME }}
+          TF_VAR_newrelic_account_id: ${{ vars.NEW_RELIC_ACCOUNT_ID }}
+          TF_VAR_newrelic_api_key: ${{ secrets.NEW_RELIC_API_KEY }}
+
+      - name: Validate Terraform
+        run: terraform validate
 
       - name: Terraform Plan
         id: plan
@@ -34,18 +39,18 @@ jobs:
           terraform plan -var-file="variables.tfvars" -input=false -no-color -out=tfplan \
           && terraform show -no-color tfplan
         env:
-          ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_SAS_TOKEN: ${{ secrets.ARM_SAS_TOKEN }}
-          NEW_RELIC_ACCOUNT_ID: ${{ vars.NEW_RELIC_ACCOUNT_ID }}
-          NEW_RELIC_API_KEY: ${{ secrets.NEW_RELIC_API_KEY }}
+          AZURE_STORAGE_BACKEND_CONTAINER_NAME: ${{ secrets.AZURE_STORAGE_BACKEND_CONTAINER_NAME }}
+          TF_VAR_newrelic_account_id: ${{ vars.NEW_RELIC_ACCOUNT_ID }}
+          TF_VAR_newrelic_api_key: ${{ secrets.NEW_RELIC_API_KEY }}
 
       - name: Terraform Apply
-        if: steps.plan.outcome == 'success'
-        id: apply
-        run: |
-          terraform apply -input=false -no-color tfplan
+        if: ${{ steps.plan.outcome == 'success' }}
+        run: terraform apply -auto-approve -input=false -no-color tfplan
         env:
-          ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_SAS_TOKEN: ${{ secrets.ARM_SAS_TOKEN }}
-          NEW_RELIC_ACCOUNT_ID: ${{ vars.NEW_RELIC_ACCOUNT_ID }}
-          NEW_RELIC_API_KEY: ${{ secrets.NEW_RELIC_API_KEY }}
+          AZURE_STORAGE_BACKEND_CONTAINER_NAME: ${{ secrets.AZURE_STORAGE_BACKEND_CONTAINER_NAME }}
+          TF_VAR_newrelic_account_id: ${{ vars.NEW_RELIC_ACCOUNT_ID }}
+          TF_VAR_newrelic_api_key: ${{ secrets.NEW_RELIC_API_KEY }}
