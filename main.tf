@@ -1,43 +1,22 @@
-#############
-# Providers #
-#############
-
-terraform {
-  required_providers {
-    newrelic = {
-      source  = "newrelic/newrelic"
-    }
-  }
-
-  backend "azurerm" {
-    resource_group_name  = "akqa-sre-challenge"
-    storage_account_name = "akqasrechallengetfstate"
-    key                  = "terraform.tfstate"
-  }
-}
-
-provider "azurerm" {
-  subscription_id = var.azure_subscription_id
-  client_id       = var.azure_client_id
-  tenant_id       = var.azure_tenant_id
-
-  skip_provider_registration = true
-
-  features {}
-}
-
-provider "newrelic" {
-  region = var.newrelic_region
-}
-
 ########
 # Data #
 ########
 
-data "newrelic_account" "acc" {}
+data "newrelic_account" "acc" {
+  # Configuration for data source
+}
 
 #######################
 # Modules & Resources #
 #######################
 
-# < Your code here >
+module "newrelic" {
+  source = "./modules/newrelic"
+
+  website_url               = var.website_url
+  newrelic_account_id       = var.newrelic_account_id
+  newrelic_api_key          = var.newrelic_api_key
+  newrelic_region           = var.newrelic_region
+  newrelic_synthetic_region = var.newrelic_synthetic_region
+  email_recipients          = var.email_recipients
+}
